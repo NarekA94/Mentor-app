@@ -5,7 +5,6 @@ import {Formik} from 'formik';
 import {employmentValidtaionSchema} from '../validationSchema';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {AuthContext} from '../../../context';
-import auth from '../../../navigation/auth/auth';
 
 export const Employment = ({navigation}) => {
   const formikRef = useRef(null);
@@ -14,8 +13,8 @@ export const Employment = ({navigation}) => {
     navigation.setOptions({
       headerRight: () => (
         <Icon
-          name="arrow-forward"
-          size={30}
+          name="md-chevron-forward-outline"
+          size={28}
           style={{marginRight: 10}}
           onPress={handleSubmit}
         />

@@ -3,7 +3,7 @@ import {Image, PermissionsAndroid, View} from 'react-native';
 import DefaultPicker from 'react-native-image-crop-picker';
 import {Button} from '../Button/Button';
 
-export const ImagePicker = () => {
+export const ImagePicker = ({getImagePath}) => {
   const [img, setImg] = useState();
   const requestCameraPermission = async () => {
     try {
@@ -34,10 +34,12 @@ export const ImagePicker = () => {
       height: 400,
       cropping: true,
       mediaType: 'photo',
+      includeBase64: true,
     })
       .then((image) => {
-        console.log(image);
         setImg(image);
+        console.log(image);
+        getImagePath && getImagePath(image?.data);
       })
       .catch((err) => console.log(err));
   }

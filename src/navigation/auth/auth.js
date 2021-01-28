@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {BasicInfo, Employment} from '../../screens';
+import {BasicInfo, Employment, CreateGroup, HomePage} from '../../screens';
 import {AuthContextProvider} from '../../context';
 
 const Stack = createStackNavigator();
@@ -13,7 +13,8 @@ export default () => (
         this.user = {...this.user, ...user};
       },
     }}>
-    <Stack.Navigator initialRouteName="BasicInfo">
+    <Stack.Navigator initialRouteName="HomePage">
+    <Stack.Screen name="HomePage" options={{headerShown: false}} component={HomePage} />
       <Stack.Screen
         name="BasicInfo"
         options={{
@@ -22,6 +23,7 @@ export default () => (
         component={BasicInfo}
       />
       <Stack.Screen name="Employment" component={Employment} />
+      <Stack.Screen name="CreateGroup" component={CreateGroup} />
     </Stack.Navigator>
   </AuthContextProvider>
 );

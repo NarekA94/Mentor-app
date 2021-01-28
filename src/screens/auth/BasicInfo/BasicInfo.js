@@ -1,10 +1,17 @@
-import React, {Fragment, useLayoutEffect, useRef, useContext} from 'react';
+import React, {
+  Fragment,
+  useLayoutEffect,
+  useRef,
+  useContext,
+  useState,
+} from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {DefaultInput, ImagePicker, DefaultSelect} from '../../../components';
 import {Formik, Field} from 'formik';
 import {basicValidationSchema} from '../validationSchema';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {AuthContext} from '../../../context';
+import {useGeolocation} from '../../../helpers';
 
 const gender = [
   {label: 'Male', value: 'male'},
@@ -12,14 +19,16 @@ const gender = [
 ];
 
 export const BasicInfo = ({navigation}) => {
+  const {position} = useGeolocation();
   const formikRef = useRef(null);
   const authUser = useContext(AuthContext);
+  const [imagePath, setImagePath] = useState('');
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Icon
-          name="arrow-forward"
-          size={30}
+          name="md-chevron-forward-outline"
+          size={28}
           style={{marginRight: 10}}
           onPress={handleSubmit}
         />
@@ -29,6 +38,11 @@ export const BasicInfo = ({navigation}) => {
 
   function handleSubmit() {
     formikRef?.current?.handleSubmit();
+  }
+
+  function getImagePath(src) {
+    console.log(src);
+    setImagePath(src);
   }
 
   return (
@@ -44,6 +58,9 @@ export const BasicInfo = ({navigation}) => {
               gender: '',
             }}
             onSubmit={(value) => {
+              value.avatar = imagePath;
+              value.lat = position.latitude;
+              value.lng = position.longitude;
               authUser.userData = value;
               navigation.navigate('Employment');
             }}
@@ -77,10 +94,7 @@ export const BasicInfo = ({navigation}) => {
                   data={gender}
                   placeholder="Select gender"
                 />
-                <ImagePicker />
-                {/* <View style={{marginTop: 20}}>
-                  <Button name="Next" onPress={formikProps.handleSubmit} />
-                </View> */}
+                <ImagePicker getImagePath={getImagePath} />
               </Fragment>
             )}
           </Formik>
