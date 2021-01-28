@@ -1,1 +1,2 @@
-export * from './HomeScreen/HomeScreen';
+export * from './auth/BasicInfo/BasicInfo';
+export * from './auth/Employment/Employment'
