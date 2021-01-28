@@ -1,13 +1,15 @@
-import React, {useRef, useLayoutEffect, Fragment} from 'react';
+import React, {useRef, useLayoutEffect, Fragment, useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {DefaultInput} from '../../../components';
 import {Formik} from 'formik';
 import {employmentValidtaionSchema} from '../validationSchema';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {AuthContext} from '../../../context';
+import auth from '../../../navigation/auth/auth';
 
 export const Employment = ({navigation}) => {
   const formikRef = useRef(null);
-
+  const authUser = useContext(AuthContext);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -27,7 +29,7 @@ export const Employment = ({navigation}) => {
 
   return (
     <View style={styles.root}>
-      <View style={styles.section} >
+      <View style={styles.section}>
         <Formik
           innerRef={formikRef}
           initialValues={{
@@ -36,7 +38,10 @@ export const Employment = ({navigation}) => {
             country: '',
             city: '',
           }}
-          onSubmit={async () => {}}
+          onSubmit={(value) => {
+            authUser.userData = value;
+            navigation.navigate('CreateGroup');
+          }}
           validationSchema={employmentValidtaionSchema}>
           {(formikProps) => (
             <Fragment>

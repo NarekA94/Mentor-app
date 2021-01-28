@@ -1,9 +1,10 @@
-import React, {Fragment, useLayoutEffect, useRef} from 'react';
+import React, {Fragment, useLayoutEffect, useRef, useContext} from 'react';
 import {View, StyleSheet, Platform} from 'react-native';
 import {DefaultInput, ImagePicker, DefaultSelect} from '../../../components';
 import {Formik, Field} from 'formik';
 import {basicValidationSchema} from '../validationSchema';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {AuthContext} from '../../../context';
 
 const gender = [
   {label: 'Male', value: 'male'},
@@ -12,6 +13,7 @@ const gender = [
 
 export const BasicInfo = ({navigation}) => {
   const formikRef = useRef(null);
+  const authUser = useContext(AuthContext);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -32,7 +34,6 @@ export const BasicInfo = ({navigation}) => {
   return (
     <Fragment>
       <View style={styles.root}>
-        {/* <H3 style={styles.heading}>Create an Account</H3> */}
         <View style={styles.section}>
           <Formik
             innerRef={formikRef}
@@ -42,7 +43,10 @@ export const BasicInfo = ({navigation}) => {
               email: '',
               gender: '',
             }}
-            onSubmit={async (value) => {}}
+            onSubmit={(value) => {
+              authUser.userData = value;
+              navigation.navigate('Employment');
+            }}
             validationSchema={basicValidationSchema}>
             {(formikProps) => (
               <Fragment>
