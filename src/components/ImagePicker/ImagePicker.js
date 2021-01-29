@@ -1,31 +1,35 @@
 import React, {useState} from 'react';
-import {Image, PermissionsAndroid, View} from 'react-native';
+import {Image, PermissionsAndroid, Platform, View} from 'react-native';
 import DefaultPicker from 'react-native-image-crop-picker';
 import {Button} from '../Button/Button';
 
 export const ImagePicker = ({getImagePath}) => {
   const [img, setImg] = useState();
   const requestCameraPermission = async () => {
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title: 'Cool Photo App Camera Permission',
-          message:
-            'Cool Photo App needs access to your camera ' +
-            'so you can take awesome pictures.',
-          buttonNeutral: 'Ask Me Later',
-          buttonNegative: 'Cancel',
-          buttonPositive: 'OK',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        takePhoto();
-      } else {
-        console.log('Camera permission denied');
+    if (Platform.OS !== 'ios') {
+      try {
+        const granted = await PermissionsAndroid.request(
+          PermissionsAndroid.PERMISSIONS.CAMERA,
+          {
+            title: 'Cool Photo App Camera Permission',
+            message:
+              'Cool Photo App needs access to your camera ' +
+              'so you can take awesome pictures.',
+            buttonNeutral: 'Ask Me Later',
+            buttonNegative: 'Cancel',
+            buttonPositive: 'OK',
+          },
+        );
+        if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+          takePhoto();
+        } else {
+          console.log('Camera permission denied');
+        }
+      } catch (err) {
+        console.warn(err);
       }
-    } catch (err) {
-      console.warn(err);
+    }else{
+      takePhoto()
     }
   };
   function takePhoto() {

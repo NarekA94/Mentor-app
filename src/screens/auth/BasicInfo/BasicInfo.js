@@ -5,14 +5,19 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import {View, StyleSheet, Platform, KeyboardAvoidingView} from 'react-native';
+import {
+  StyleSheet,
+  Platform,
+  KeyboardAvoidingView,
+  Keyboard,
+} from 'react-native';
 import {DefaultInput, ImagePicker, DefaultSelect} from '../../../components';
 import {Formik, Field} from 'formik';
 import {basicValidationSchema} from '../validationSchema';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {AuthContext} from '../../../context';
 import {useGeolocation} from '../../../helpers';
-import { ScrollView } from 'react-native-gesture-handler';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const gender = [
   {label: 'Male', value: 'male'},
@@ -36,7 +41,15 @@ export const BasicInfo = ({navigation}) => {
       ),
     });
   }, [navigation]);
-
+  useLayoutEffect(() => {
+    Keyboard.addListener('keyboardDidShow', keyboardDidShow);
+    return () => {
+      Keyboard.removeListener('keyboardDidShow', keyboardDidShow);
+    };
+  }, []);
+  function keyboardDidShow(e) {
+    console.log(e.endCoordinates.height);
+  }
   function handleSubmit() {
     formikRef?.current?.handleSubmit();
   }
@@ -47,8 +60,13 @@ export const BasicInfo = ({navigation}) => {
 
   return (
     <Fragment>
-      <KeyboardAvoidingView style={styles.root}>
-        <ScrollView contentContainerStyle={styles.section}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : ''}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+        style={styles.root}>
+        <ScrollView
+          keyboardShouldPersistTaps={'always'}
+          contentContainerStyle={styles.section}>
           <Formik
             innerRef={formikRef}
             initialValues={{
@@ -56,8 +74,8 @@ export const BasicInfo = ({navigation}) => {
               last_name: '',
               email: '',
               gender: '',
-              password: "",
-              repeat_password: ""
+              password: '',
+              repeat_password: '',
             }}
             onSubmit={(value) => {
               value.avatar = imagePath;
@@ -102,6 +120,7 @@ export const BasicInfo = ({navigation}) => {
                   name="password"
                   placeholder="Password"
                   formikProps={formikProps}
+                  blurOnSubmit={false}
                   style={styles.inputs}
                 />
                 <DefaultInput
@@ -110,6 +129,7 @@ export const BasicInfo = ({navigation}) => {
                   name="repeat_password"
                   placeholder="Confirm password"
                   formikProps={formikProps}
+                  blurOnSubmit={false}
                   style={styles.inputs}
                 />
 
