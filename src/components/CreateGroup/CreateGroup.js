@@ -9,6 +9,7 @@ import {Formik} from 'formik';
 import {DefaultInput, Loader} from '../';
 import {groupValidationSchema} from './validationSchema';
 import {getEmployees, signUp} from '../../store/actions/auth';
+import {updateGroup} from '../../store/actions/group';
 
 const {height} = Dimensions.get('window');
 
@@ -43,9 +44,7 @@ export const CreateGroup = ({group, user = {}, auth = false}) => {
     formikRef?.current?.handleSubmit();
   }
   useLayoutEffect(() => {
-    if (!auth) {
-      dispatch(getEmployees());
-    }
+    dispatch(getEmployees());
   }, []);
 
   function onSelectedItemsChange(e) {
@@ -62,12 +61,17 @@ export const CreateGroup = ({group, user = {}, auth = false}) => {
           validationSchema={groupValidationSchema}
           onSubmit={async (value) => {
             loaderRef?.current?.open();
-            const userFields = {
-              group_members: selectedItems || [],
-              ...value,
-              ...user,
-            };
-            await dispatch(signUp(userFields));
+            if (!auth) {
+              const userFields = {
+                group_members: selectedItems || [],
+                ...value,
+                ...user,
+              };
+              await dispatch(signUp(userFields));
+            } else {
+              await dispatch(updateGroup(group?.id, {name: value.group_name}));
+            }
+
             loaderRef?.current?.close();
           }}>
           {(formikProps) => (

@@ -1,21 +1,13 @@
 import React, {useEffect} from 'react';
-import {useState} from 'react';
 import {CreateGroup} from '../../../components';
-import {httpClient} from '../../../httpClient';
+import {fetchGroup} from '../../../store/actions/group';
+import {useDispatch, useSelector} from 'react-redux';
 
 export const Group = () => {
-  const [group, setGroup] = useState();
+  const {group} = useSelector((state) => state.group);
+  const dispatch = useDispatch();
   useEffect(() => {
-    async function fetchGroups() {
-      try {
-        const res = await httpClient.get('group/get-user-group');
-        console.log(res);
-        setGroup(res?.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchGroups()
+    dispatch(fetchGroup());
   }, []);
-  return <CreateGroup group={group} auth={true}  />;
+  return <CreateGroup group={group} auth={true} />;
 };
