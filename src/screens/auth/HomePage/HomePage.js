@@ -15,8 +15,14 @@ export const HomePage = ({navigation}) => {
         }}
       />
       <View style={styles.table}>
-        <Button name="Sign In" />
-        <Button name="Sign Up" onPress={() => navigation.navigate("CreateGroup")} />
+        <Button
+          name="Sign In"
+          onPress={() => navigation.navigate('SignIn')}
+        />
+        <Button
+          name="Sign Up"
+          onPress={() => navigation.navigate('BasicInfo')}
+        />
       </View>
     </View>
   );

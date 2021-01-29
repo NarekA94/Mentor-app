@@ -5,13 +5,14 @@ import React, {
   useContext,
   useState,
 } from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet, Platform, KeyboardAvoidingView} from 'react-native';
 import {DefaultInput, ImagePicker, DefaultSelect} from '../../../components';
 import {Formik, Field} from 'formik';
 import {basicValidationSchema} from '../validationSchema';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {AuthContext} from '../../../context';
 import {useGeolocation} from '../../../helpers';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const gender = [
   {label: 'Male', value: 'male'},
@@ -41,14 +42,13 @@ export const BasicInfo = ({navigation}) => {
   }
 
   function getImagePath(src) {
-    console.log(src);
     setImagePath(src);
   }
 
   return (
     <Fragment>
-      <View style={styles.root}>
-        <View style={styles.section}>
+      <KeyboardAvoidingView style={styles.root}>
+        <ScrollView contentContainerStyle={styles.section}>
           <Formik
             innerRef={formikRef}
             initialValues={{
@@ -56,6 +56,8 @@ export const BasicInfo = ({navigation}) => {
               last_name: '',
               email: '',
               gender: '',
+              password: "",
+              repeat_password: ""
             }}
             onSubmit={(value) => {
               value.avatar = imagePath;
@@ -94,12 +96,29 @@ export const BasicInfo = ({navigation}) => {
                   data={gender}
                   placeholder="Select gender"
                 />
+                <DefaultInput
+                  autoCompleteType="password"
+                  secureTextEntry={true}
+                  name="password"
+                  placeholder="Password"
+                  formikProps={formikProps}
+                  style={styles.inputs}
+                />
+                <DefaultInput
+                  autoCompleteType="password"
+                  secureTextEntry={true}
+                  name="repeat_password"
+                  placeholder="Confirm password"
+                  formikProps={formikProps}
+                  style={styles.inputs}
+                />
+
                 <ImagePicker getImagePath={getImagePath} />
               </Fragment>
             )}
           </Formik>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </Fragment>
   );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import {HomeScreen} from '../../screens/home';
+import {HomeScreen, Group} from '../../screens';
 
 const Stack = createStackNavigator();
 
@@ -11,5 +11,6 @@ export default () => (
       options={{headerShown: false}}
       component={HomeScreen}
     />
+    <Stack.Screen name="Group" component={Group} />
   </Stack.Navigator>
 );

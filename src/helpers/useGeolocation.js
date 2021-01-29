@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import {useLayoutEffect, useState} from 'react';
 import Geolocation from '@react-native-community/geolocation';
 
 export const useGeolocation = () => {
