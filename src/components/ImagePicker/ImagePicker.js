@@ -42,7 +42,6 @@ export const ImagePicker = ({getImagePath}) => {
     })
       .then((image) => {
         setImg(image);
-        console.log(image);
         getImagePath && getImagePath(image?.data);
       })
       .catch((err) => console.log(err));
