@@ -121,6 +121,10 @@ export const CreateGroup = ({group, user = {}, auth = false}) => {
           </View>
           <View>
             <H3>{groupItem?.name || ''}</H3>
+            <Text style={styles.text}>{groupItem?.country || ''}</Text>
+            <Text style={styles.text}>{groupItem?.city || ''}</Text>
+            <Text style={styles.text}>{groupItem?.job_title || ''}</Text>
+            <Text style={styles.text}>{groupItem?.gender || ''}</Text>
           </View>
         </View>
       </MyModal>

@@ -18,7 +18,7 @@ export const MyModal = forwardRef(({children, continerStyle}, ref) => {
           contentContainerStyle={{
             backgroundColor: 'white',
             padding: 20,
-            width: "80%",
+            width: "90%",
             alignSelf: "center",
             ...continerStyle,
           }}>

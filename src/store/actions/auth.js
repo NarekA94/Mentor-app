@@ -8,6 +8,7 @@ export const getEmployees = () => {
       const newEmploers = response?.data[0].map((value) => ({
         id: `${value?.id}`,
         name: `${value?.first_name} ${value?.last_name}`,
+        ...value,
       }));
       dispatch({
         type: '@@auth/SET_EMPLOYEES',
@@ -89,7 +90,7 @@ export const fetchUser = () => {
       const response = await httpClient.get('user');
       dispatch({
         type: '@@auth/SET_USER',
-        payload: response?.data?.data
+        payload: response?.data?.data,
       });
     } catch (error) {
       console.error(error.response);

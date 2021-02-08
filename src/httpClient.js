@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const APP_DOMAIN = 'http://192.168.31.234';
+export const APP_DOMAIN = 'http://207.154.241.7';
 export const API_URL = `${APP_DOMAIN}/api/v1/`;
 
 export const httpClient = axios.create({
