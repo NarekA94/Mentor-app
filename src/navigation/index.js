@@ -1,5 +1,5 @@
 import React from 'react';
-import {useSelector, dispatch, useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {NavigationContainer} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import Auth from './auth/auth';
@@ -14,7 +14,7 @@ export default () => {
   React.useEffect(() => {
     async function fetchData() {
       const token = await Storage.retrieveData('token');
-      console.log(token)
+      console.log(token);
       if (!!token) {
         InitHeaders(token);
         dispatch(await fetchUser());

@@ -8,6 +8,7 @@ import {
   AuthGroup,
 } from '../../screens';
 import {AuthContextProvider} from '../../context';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Stack = createStackNavigator();
 
@@ -21,23 +22,23 @@ const user = {
 export default () => {
   return (
     <AuthContextProvider value={user}>
-      <Stack.Navigator initialRouteName="HomePage">
-        <Stack.Screen
-          name="HomePage"
-          options={{headerShown: false}}
-          component={HomePage}
-        />
-        <Stack.Screen
-          name="BasicInfo"
-          options={{
-            headerTitle: 'Create an Account',
-          }}
-          component={BasicInfo}
-        />
-        <Stack.Screen name="Employment" component={Employment} />
-        <Stack.Screen name="CreateGroup" component={AuthGroup} />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-      </Stack.Navigator>
+        <Stack.Navigator initialRouteName="CreateGroup">
+          <Stack.Screen
+            name="HomePage"
+            options={{headerShown: false}}
+            component={HomePage}
+          />
+          <Stack.Screen
+            name="BasicInfo"
+            options={{
+              headerTitle: 'Create an Account',
+            }}
+            component={BasicInfo}
+          />
+          <Stack.Screen name="Employment" component={Employment} />
+          <Stack.Screen name="CreateGroup" component={AuthGroup} />
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+        </Stack.Navigator>
     </AuthContextProvider>
   );
 };

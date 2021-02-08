@@ -1,15 +1,15 @@
 import React, {useLayoutEffect, Fragment, useRef} from 'react';
-import {View, Dimensions, StyleSheet} from 'react-native';
+import {View, Dimensions, StyleSheet, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useState} from 'react';
-import MultiSelect from 'react-native-multiple-select';
 import {Formik} from 'formik';
-import {DefaultInput, Loader} from '../';
+import {DefaultInput, Loader, MultiSelect, MyModal} from '../';
 import {groupValidationSchema} from './validationSchema';
 import {getEmployees, signUp} from '../../store/actions/auth';
 import {updateGroup} from '../../store/actions/group';
+import {H3} from '../H3/H3';
 
 const {height} = Dimensions.get('window');
 
@@ -20,7 +20,8 @@ export const CreateGroup = ({group, user = {}, auth = false}) => {
   const [selectedItems, setSelectedItems] = useState();
   const formikRef = useRef(null);
   const loaderRef = useRef();
-
+  const modalRef = useRef();
+  const [groupItem, setGroupItem] = useState();
   useLayoutEffect(() => {
     if (group) {
       formikRef?.current?.setFieldValue('group_name', group?.name);
@@ -50,6 +51,12 @@ export const CreateGroup = ({group, user = {}, auth = false}) => {
   function onSelectedItemsChange(e) {
     setSelectedItems(e);
   }
+
+  function handleOnLongPressItem(item) {
+    setGroupItem(item);
+    modalRef?.current?.open();
+  }
+  console.log(groupItem), console.log(user);
   return (
     <View style={{flex: 1, backgroundColor: '#fff'}}>
       <View style={{padding: 25}}>
@@ -96,12 +103,27 @@ export const CreateGroup = ({group, user = {}, auth = false}) => {
                 submitButtonText="Submit"
                 flatListProps={{scrollEnabled: true}}
                 styleItemsContainer={{height: height * 0.42}}
+                onLongPressItem={handleOnLongPressItem}
               />
             </Fragment>
           )}
         </Formik>
       </View>
       <Loader ref={loaderRef} />
+      <MyModal ref={modalRef}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View>
+            <H3>{`${user?.first_name || ''} ${user?.last_name || ''}`}</H3>
+            <Text style={styles.text}>{user?.country || ''}</Text>
+            <Text style={styles.text}>{user?.city || ''}</Text>
+            <Text style={styles.text}>{user?.job_title || ''}</Text>
+            <Text style={styles.text}>{user?.gender || ''}</Text>
+          </View>
+          <View>
+            <H3>{groupItem?.name || ''}</H3>
+          </View>
+        </View>
+      </MyModal>
     </View>
   );
 };
@@ -115,5 +137,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'transparent',
     color: '#6b4d2b',
+  },
+  text: {
+    marginBottom: 5,
+    paddingLeft: 10,
   },
 });

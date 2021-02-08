@@ -310,6 +310,8 @@ PODS:
     - React-Core
   - RNGestureHandler (1.9.0):
     - React-Core
+  - RNI18n (2.0.15):
+    - React
   - RNImageCropPicker (0.35.2):
     - React-Core
     - React-RCTImage
@@ -319,6 +321,8 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
+  - RNLocalize (2.0.1):
+    - React-Core
   - RNScreens (2.17.1):
     - React-Core
   - RNVectorIcons (8.0.0):
@@ -382,7 +386,9 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNI18n (from `../node_modules/react-native-i18n`)
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
+  - RNLocalize (from `../node_modules/react-native-localize`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -468,8 +474,12 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-picker/picker"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNI18n:
+    :path: "../node_modules/react-native-i18n"
   RNImageCropPicker:
     :path: "../node_modules/react-native-image-crop-picker"
+  RNLocalize:
+    :path: "../node_modules/react-native-localize"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNVectorIcons:
@@ -521,7 +531,9 @@ SPEC CHECKSUMS:
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNCPicker: 77183d9b1cd80ae55505322f8ad09ba0036e29ba
   RNGestureHandler: 9b7e605a741412e20e13c512738a31bd1611759b
+  RNI18n: e2f7e76389fcc6e84f2c8733ea89b92502351fd8
   RNImageCropPicker: 9e0bf18cf4184a846fed55747c8e622208b39947
+  RNLocalize: dcf0fdb332b37b0d24178e876a7ce4dbbc9c838d
   RNScreens: b6c9607e6fe47c1b6e2f1910d2acd46dd7ecea3a
   RNVectorIcons: f67a1abce2ec73e62fe4606e8110e95a832bc859
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
